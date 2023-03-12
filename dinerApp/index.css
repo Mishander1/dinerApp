@@ -1,0 +1,219 @@
+body {
+    margin: 0;
+    color: black;   
+} 
+.default-state{
+    display: block;
+    width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+}
+main {
+    padding: 29.2px 0 0 0;
+}
+header{
+    width: 600px;
+    height: 167px;
+    left: 0px;
+    top: 0px;
+    border: solid 1px rgb(241, 255, 164);
+    background-image: url('/img/burger-header.jpeg');
+    background-position: center;
+    margin-bottom: 29.2px;
+}
+.header-text,
+#order-title,
+.order-item,
+.name,
+.ingredients,
+.price,
+.thanks {
+    font-family: 'Smythe', cursive;
+}
+
+.header-text {
+    color:aliceblue;
+    margin: 46 auto 70 46.07;
+    
+}
+
+H1 {
+    font-size: 39px;
+    
+}
+H2 {
+    font-size: 22.42px;
+    
+}
+
+
+.menu {
+    display: block;
+    width: 508px;
+    margin: 0 auto;
+    padding: 0;
+    
+    
+}
+.menu-item {
+    
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
+    gap: 31px;
+    margin-top: 45px;
+    margin-bottom: 45px;
+     
+}
+
+.name {
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    font-weight: 400;
+}
+.ingredients {
+    display: block;
+    font-size: 16px;
+    color: #8B8B8B;
+}
+.price {
+    font-size: 20px;
+    margin: 0;
+    
+}
+.divider {
+    display: block;
+    border-bottom: 1px solid lightgray;  
+    margin-bottom: 45px;
+}
+
+.emoji-pic {
+    font-size: 70px;
+    margin: 0;
+}
+
+i {
+    cursor: pointer;
+    display: flex;
+    font-size: 32px;
+    border: solid 1px lightgray;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;  
+    margin: 0 0 auto auto;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#order-title {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 45px;
+    margin-bottom: 64px;
+}
+.remove {
+    color: #BBBBBB;
+    font-size: 12px;
+    margin-left: 13px;
+
+}
+
+.total {
+    border-top: 2px solid #393333;
+    padding: 14px 0 0 0;
+}
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Smythe', cursive;
+    margin-top: 22px;
+}
+#order-btn {
+    display: block;
+    background-color: #16DB99;
+    color: white;
+    margin: 53px auto 0 auto;
+    font-size: 16px;
+    width: 508px;
+    height: 60px;
+    font-family: 'Verdana';
+    font-weight: 700;
+    border: none;
+    border-radius: 2px;
+    offset: 0px, 1px;  
+}
+.remove {
+    cursor: pointer;
+}
+.hidden {
+    display: none;
+}
+.modal {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    display: flexbox;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 542.24px;
+    width: 524px;
+    border-radius: 5px;
+    box-shadow: 5.186544418334961px 5.186544418334961px 255.43731689453125px 0px #757575;
+    background-color: #FFFFFF;
+    color: rgb(11, 11, 11);
+}
+.modal-inner{
+    text-align: center;
+}
+#details-title {
+    text-align: center;
+    margin-top: 47.32px;
+
+}
+#consent-form {
+    display: flex;
+    flex-direction: column;
+    gap: 23.22px;
+    margin: 46.07px 24.87px 147.58px 23.22px;
+}
+input {
+    
+    height: 71.3px
+}
+button.pay-btn {
+    width: 475.91px;
+    height: 71.3px;
+    background: #16DB99;
+    border: none;
+    color: white;
+    font-weight: 700;
+    
+}
+.thanks-box {
+    margin-bottom: 252px;
+    width: 504px;
+    height: 120px;
+    background: #ECFDF5;
+}
+
+.thanks {
+    display: block;
+    color: #065F46;
+    width: 504px;
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.thanks-text {
+    padding: 51px 66px 52px 59px;
+    margin: 0 auto;
+}
+
