@@ -1,23 +1,24 @@
 import {menuArray} from './data.js'
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 //console.log(menuArray)
-let totalPrice = 0
 let orderArray = []
 const modal = document.getElementById('modal')
 
 
 document.addEventListener('click', function(e){
     if(e.target.dataset.add){
-        getSelectedItem(parseInt(e.target.dataset.add))
+        getSelectedItemToAdd(e.target.dataset.add)
     }else if(e.target.dataset.remove){
-        removeSelectedItem(parseInt(e.target.dataset.remove))
+        getSelectedItemToRemove(e.target.dataset.remove)
     }else if(e.target.dataset.completeBtn){
-        openPayModal()
+        openPayModal(e.target.dataset.completeBtn)
     }else if(e.target.dataset.payBtn){
-        restart()
+        restart(e.target.dataset.payBtn)
     }})
 function getFeedHtml(){
     let feedHtml = ''
     menuArray.forEach(function(item){
+        //console.log(item)
         feedHtml += `
         <div class="menu">
             <div class="menu-item">
@@ -36,93 +37,80 @@ function getFeedHtml(){
                     </p>
                 </div>
                 <i class="fa-thin fa-plus"
-                data-add="${item.id}">+</i>    
+                data-add="${item.uuid}"></i>    
             </div>
             <div class="divider">
             </div>
         </div>
         `
     })
-    
-
-    //console.log(feedHtml)
-    document.getElementById('menu').innerHTML = feedHtml
-    
+    document.getElementById('menu').innerHTML = feedHtml   
 }
-
-
-
-function getSelectedItem(itemId){
-    //console.log(typeof itemId)
+function getSelectedItemToAdd(itemUuid){
     const selectedItem = menuArray.filter(function(item){
-        return item.id === itemId
-    })
-    bill(selectedItem)
-    //console.log(selectedItem)    
+        return item.uuid === itemUuid
+    })[0]  
+    add(selectedItem)   
 }
-function removeSelectedItem(itemId){
+function getSelectedItemToRemove(itemUuid){
     const selectedItem = orderArray.filter(function(item){
-        return item.id = itemId
-    })
-    orderArray.splice(selectedItem,1)
-    let order = ''
-    totalPrice = 0
-    orderArray.forEach(function(ordered){
-        order += `
-            
-            <div class="order-item">
-                <div class="name">
-                ${ordered.name}<label class="remove"
-                data-remove="${ordered.id}">remove</label>
-                </div>
-                <p class="price">
-                $${ordered.price}
-                </p>
-                
-            </div>
-            
-        `
-
-        totalPrice += ordered.price
-    })
-    
-    document.getElementById('order').innerHTML = order
-    document.getElementById('total-price').innerHTML = '$' + totalPrice
+        return item.uuid === itemUuid
+    })[0]  
+    removeSelectedItem(selectedItem)   
 }
-
-function bill(itemObj){
-    //console.log(itemObj)
-    let orderTitle = '<h1 id="order-title">Your order<h1>'
+function add(itemObj){
+    orderArray.push({
+    name: itemObj.name,
+    ingredients: itemObj.ingredients,
+    id: itemObj.id,
+    price: itemObj.price,
+    emoji: itemObj.emoji,
+    isRemoved: false,
+    uuid: uuidv4(),
+    })       
+    drawOrder()
+}
+function drawOrder(){
     let order = ''
-    
-    itemObj.forEach(function(selected){
-        orderArray.push(selected)
-        order += `
+    document.getElementById('order-bill').classList.add("hidden")
+    let totalPrice = 0
+    orderArray.forEach(function(orderedItem){
+        if(!orderedItem.isRemoved){
+            //console.log(orderedItem)
             
-            <div class="order-item">
-                <div class="name">
-                ${selected.name}<label class="remove"
-                data-remove="${selected.id}">remove</label>
-                </div>
-                <p class="price">
-                $${selected.price}
-                </p>
-                
-            </div>
+            order += `  
+                <div class="order-item">
+                    <div class="name">
+                    ${orderedItem.name}<label class="remove"
+                    for="${orderedItem}"
+                    data-remove="${orderedItem.uuid}">remove</label>
+                    </div>
+                    <p class="price">
+                    $${orderedItem.price}
+                    </p>    
+                </div>   
+            `
             
-        `
-        totalPrice += selected.price
-       
+            totalPrice += orderedItem.price
+            console.log(orderedItem.price)
+            let orderTitle = '<h1 id="order-title">Your order<h1>'
+            document.getElementById('order-title').innerHTML = orderTitle
+            document.getElementById('order').innerHTML = order
+            document.getElementById('total-price').innerHTML = '$' + totalPrice
+            document.getElementById('order-bill').classList.remove("hidden")
+        }
+        
         
     })
-    document.getElementById('order-title').innerHTML = orderTitle
-    document.getElementById('order').innerHTML += order
-    //document.getElementById('total').innerHTML = totalHtml
-    document.getElementById('total-price').innerHTML = '$' + totalPrice
-    document.getElementById('order-bill').classList.remove("hidden")
+    console.log('I work')
+    console.log(orderArray)
     
 }
- 
+function removeSelectedItem(itemObj){
+    itemObj.isRemoved = true
+    drawOrder()
+    console.log(itemObj)
+}      
 
 function openPayModal() {
      modal.innerHTML = `
@@ -138,19 +126,13 @@ function openPayModal() {
                     data-pay-btn="pay-btn">Pay</button>
 				</div>
     `
-   
-    
-      
-
     document.getElementById('modal').classList.remove("hidden")
     const consentForm = document.getElementById('consent-form')
     consentForm.addEventListener('submit', function(event){
         event.preventDefault()
-        
         const consentFormData = new FormData(consentForm)
         const fullName = consentFormData.get('fullName')
-        console.log(fullName)  
-        
+        //console.log(fullName)  
         setTimeout(function(){
             document.getElementById('modal').classList.add("hidden")
             document.getElementById('order-bill').classList.add("thanks")
@@ -159,14 +141,11 @@ function openPayModal() {
             <h2 class="thanks-text">Thanks, <span class="modal-display-name">${fullName}</span>! Your order is on its way!</h2>
             </div>
         `
-        }, 100)
-        
-    })
-    
-
-    
+        }, 100)   
+    })   
 }
-
-
-
 getFeedHtml()
+
+
+
+
